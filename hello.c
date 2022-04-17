@@ -2,6 +2,7 @@
 
 int main(void)
 {
+    // write to standard output stream, stdout
     printf("Hello World! I'm Angel Cool.\n");
 
     return 0;

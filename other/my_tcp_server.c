@@ -17,7 +17,7 @@ int main(){
     int server_socket;
     server_socket = socket(AF_INET,SOCK_STREAM,0);
 
-    // SO_REUSEADDR allows the program to restart without delay ( don't wait for TIME_WAIT, see: netstat -panto )
+    // SO_REUSEADDR allows the program to restart without delay ( don't wait for TIME_WAIT, see: netstat -panto  also see: ss -nato |grep 9002)
     setsockopt(server_socket, SOL_SOCKET, SO_REUSEADDR, (char*) &iSetOption, sizeof(iSetOption));
 
     // define the server address

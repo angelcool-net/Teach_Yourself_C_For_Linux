@@ -7,6 +7,8 @@
 
 #include <netinet/in.h>
 
+int iSetOption = 1;
+
 int main(){
 
     char server_message[256] = "You have reached the server";
@@ -15,6 +17,9 @@ int main(){
     int server_socket;
     server_socket = socket(AF_INET,SOCK_STREAM,0);
 
+    // SO_REUSEADDR allows the program to restart without delay ( don't wait for TIME_WAIT, see: netstat -panto )
+    setsockopt(server_socket, SOL_SOCKET, SO_REUSEADDR, (char*) &iSetOption, sizeof(iSetOption));
+
     // define the server address
     struct sockaddr_in server_address;
     server_address.sin_family = AF_INET;
@@ -22,7 +27,9 @@ int main(){
     server_address.sin_addr.s_addr = INADDR_ANY;
 
     // bind the socket to our speficied IP and port
-    bind(server_socket, (struct sockaddr *) &server_address, sizeof(server_address));
+    int bind_result = bind(server_socket, (struct sockaddr *) &server_address, sizeof(server_address));
+
+    printf("bind result %d\n\n", bind_result);
 
     listen(server_socket, 5);
 
